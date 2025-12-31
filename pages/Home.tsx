@@ -210,22 +210,32 @@ const Home: React.FC = () => {
           </Reveal>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
-            {SERVICES.map((service, index) => (
-              <Reveal key={service.id} delay={index * 100}>
-                <div className="h-full p-8 bg-white rounded-2xl shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)] hover:shadow-[0_20px_40px_-12px_rgba(0,0,0,0.1)] transition-all duration-500 hover:-translate-y-2 border border-gray-100 group flex flex-col">
-                  <div className="w-14 h-14 bg-cerons-bg rounded-xl flex items-center justify-center mb-6 text-cerons-dark group-hover:bg-cerons-dark group-hover:text-white transition-all duration-300 transform group-hover:rotate-6">
-                    <service.icon size={26} strokeWidth={1.5} />
-                  </div>
-                  <h3 className="font-heading font-bold text-xl text-gray-900 mb-3">{service.title}</h3>
-                  <p className="text-gray-500 leading-relaxed text-sm mb-6 flex-grow">{service.description}</p>
-                  <div className="pt-6 border-t border-gray-50">
-                     <span className="text-xs font-bold text-gray-400 uppercase tracking-wider group-hover:text-cerons-accent transition-colors flex items-center gap-2">
-                        Learn More <ArrowRight size={14} />
-                     </span>
-                  </div>
-                </div>
-              </Reveal>
-            ))}
+            {SERVICES.map((service, index) => {
+               // Determine link target based on service ID for appropriate redirection
+               const linkPath = service.id === '2' ? '/services#business-websites' :
+                                service.id === '3' ? '/services#landing-pages' :
+                                service.id === '4' ? '/services#redesign' :
+                                '/services'; // Default fallback
+
+               return (
+                  <Reveal key={service.id} delay={index * 100}>
+                    <Link to={linkPath} className="block h-full group">
+                      <div className="h-full p-8 bg-white rounded-2xl shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)] hover:shadow-[0_20px_40px_-12px_rgba(0,0,0,0.1)] transition-all duration-500 hover:-translate-y-2 border border-gray-100 flex flex-col">
+                        <div className="w-14 h-14 bg-cerons-bg rounded-xl flex items-center justify-center mb-6 text-cerons-dark group-hover:bg-cerons-dark group-hover:text-white transition-all duration-300 transform group-hover:rotate-6">
+                          <service.icon size={26} strokeWidth={1.5} />
+                        </div>
+                        <h3 className="font-heading font-bold text-xl text-gray-900 mb-3">{service.title}</h3>
+                        <p className="text-gray-500 leading-relaxed text-sm mb-6 flex-grow">{service.description}</p>
+                        <div className="pt-6 border-t border-gray-50">
+                           <span className="text-xs font-bold text-gray-400 uppercase tracking-wider group-hover:text-cerons-accent transition-colors flex items-center gap-2">
+                              Learn More <ArrowRight size={14} />
+                           </span>
+                        </div>
+                      </div>
+                    </Link>
+                  </Reveal>
+               );
+            })}
           </div>
         </div>
       </section>
@@ -264,8 +274,8 @@ const Home: React.FC = () => {
                   { title: "Direct Access", desc: "Talk to developers, not sales" },
                   { title: "Conversion First", desc: "Designed to get leads" },
                   { title: "Mobile Perfect", desc: "Flawless on all devices" },
-                  { title: "SEO Foundation", desc: "Rank better on Google" },
-                  { title: "No Monthly Fees", desc: "One-time payment structure" }
+                  { title: "SEO Foundation", desc: "Rank better on Google" }
+                  // Removed "No Monthly Fees" feature as requested
                 ].map((point, i) => (
                   <div key={i} className="flex flex-col p-5 bg-white/5 border border-white/5 rounded-2xl hover:bg-white/10 transition-colors duration-300">
                     <div className="flex items-center gap-3 mb-2">

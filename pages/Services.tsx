@@ -179,7 +179,7 @@ const Services: React.FC = () => {
         
         {/* SERVICE 1: BUSINESS WEBSITES */}
         <Reveal>
-          <article className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+          <article id="business-websites" className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
             <div className="order-2 lg:order-1">
               <div className="inline-flex items-center justify-center w-14 h-14 bg-green-50 rounded-2xl text-cerons-dark mb-8 border border-green-100 shadow-sm">
                 <Layout size={28} strokeWidth={1.5} />
@@ -263,7 +263,7 @@ const Services: React.FC = () => {
 
         {/* SERVICE 2: TRAVEL & HOSPITALITY */}
         <Reveal>
-          <article className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+          <article id="travel-hospitality" className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
              <div className="order-1">
                <div className="bg-gray-100 rounded-[2.5rem] p-8 aspect-square md:aspect-[4/3] flex items-center justify-center relative overflow-hidden group shadow-2xl transition-all duration-700 hover:shadow-[0_30px_60px_-15px_rgba(0,0,0,0.1)]">
                  <div className="absolute inset-0 bg-gradient-to-bl from-blue-50/50 to-cerons-accent/5"></div>
@@ -339,7 +339,7 @@ const Services: React.FC = () => {
 
         {/* SERVICE 3: LANDING PAGES */}
         <Reveal>
-          <article className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+          <article id="landing-pages" className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
             <div className="order-2 lg:order-1">
               <div className="inline-flex items-center justify-center w-14 h-14 bg-purple-50 rounded-2xl text-purple-600 mb-8 border border-purple-100 shadow-sm">
                 <BarChart size={28} strokeWidth={1.5} />
@@ -412,7 +412,7 @@ const Services: React.FC = () => {
 
         {/* SERVICE 4: REDESIGN */}
         <Reveal>
-          <article className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+          <article id="redesign" className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
              <div className="order-1">
                <div className="bg-gray-100 rounded-[2.5rem] p-8 aspect-square md:aspect-[4/3] flex items-center justify-center relative overflow-hidden group shadow-2xl transition-all duration-700 hover:shadow-[0_30px_60px_-15px_rgba(0,0,0,0.1)]">
                  <div className="absolute inset-0 bg-cerons-dark"></div>
