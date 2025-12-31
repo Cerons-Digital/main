@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { CheckCircle2, ArrowRight, Lightbulb, PenTool, Search, Rocket, Star } from 'lucide-react';
 import { SERVICES, PROJECTS, WHATSAPP_LINK } from '../constants';
@@ -72,88 +72,123 @@ const ProjectCard: React.FC<{ project: Project; index: number }> = ({ project, i
 );
 
 const Home: React.FC = () => {
+  const blob1Ref = useRef<HTMLDivElement>(null);
+  const blob2Ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollY = window.scrollY;
+      // Optimization: Stop updating if scrolled far past hero
+      if (scrollY > 1200) return;
+
+      requestAnimationFrame(() => {
+        if (blob1Ref.current) {
+          // Moves down slowly (0.3 speed)
+          blob1Ref.current.style.transform = `translate3d(-50%, ${scrollY * 0.3}px, 0)`;
+        }
+        if (blob2Ref.current) {
+          // Moves up slowly (-0.15 speed)
+          blob2Ref.current.style.transform = `translate3d(0, ${scrollY * -0.15}px, 0)`;
+        }
+      });
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
     <div className="flex flex-col gap-0 overflow-x-hidden bg-white">
       
-      {/* SECTION 1: HERO */}
-      <section className="relative pt-32 pb-20 md:pt-48 md:pb-32 overflow-hidden">
-        {/* Background Gradients */}
-        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-cerons-bg to-white -z-20"></div>
-        <div className="absolute top-[-20%] right-[-10%] w-[800px] h-[800px] bg-cerons-accent/5 rounded-full blur-[100px] -z-10 animate-pulse"></div>
-        <div className="absolute bottom-[-10%] left-[-10%] w-[600px] h-[600px] bg-blue-50/30 rounded-full blur-[100px] -z-10"></div>
+      {/* SECTION 1: HERO - Premium & Balanced */}
+      <section className="relative pt-32 pb-24 md:pt-48 md:pb-40 overflow-hidden flex flex-col justify-center items-center">
+        {/* Background Base */}
+        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-slate-50 to-white -z-30"></div>
 
-        <div className="container mx-auto px-4 md:px-6 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center relative">
+        {/* Dynamic Grid Pattern with Mask */}
+        <div className="absolute inset-0 -z-20 pointer-events-none">
+            <div 
+              className="absolute inset-0 opacity-[0.03]"
+              style={{
+                backgroundImage: 'linear-gradient(#000 1px, transparent 1px), linear-gradient(90deg, #000 1px, transparent 1px)',
+                backgroundSize: '4rem 4rem',
+                maskImage: 'radial-gradient(ellipse 60% 50% at 50% 0%, black 40%, transparent 100%)',
+                WebkitMaskImage: 'radial-gradient(ellipse 60% 50% at 50% 0%, black 40%, transparent 100%)'
+              }}
+            ></div>
+        </div>
+        
+        {/* Parallax Blobs */}
+        <div 
+          ref={blob1Ref}
+          className="absolute top-[-20%] left-1/2 w-[800px] h-[800px] bg-cerons-accent/5 rounded-full blur-[100px] -z-10 animate-pulse"
+          style={{ transform: 'translate3d(-50%, 0, 0)' }} // Initial centered state
+        ></div>
+        <div 
+          ref={blob2Ref}
+          className="absolute bottom-[-10%] left-[-10%] w-[600px] h-[600px] bg-blue-50/30 rounded-full blur-[100px] -z-10"
+          style={{ transform: 'translate3d(0, 0, 0)' }}
+        ></div>
+
+        <div className="container mx-auto px-4 md:px-6 relative z-10">
           <Reveal>
-            <div className="space-y-8 relative z-10">
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border border-gray-200 shadow-sm text-cerons-dark text-xs font-semibold uppercase tracking-widest mb-2 animate-fade-in">
-                <span className="w-2 h-2 rounded-full bg-cerons-accent animate-pulse"></span>
+            <div className="max-w-4xl mx-auto text-center flex flex-col items-center">
+              
+              {/* Premium Badge */}
+              <div className="group relative inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-white/80 backdrop-blur-xl border border-cerons-accent/20 shadow-[0_2px_20px_-4px_rgba(34,197,94,0.2)] text-cerons-dark text-xs font-bold uppercase tracking-widest mb-10 cursor-default hover:scale-105 transition-transform duration-500">
+                <span className="relative flex h-2.5 w-2.5">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cerons-accent opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-cerons-accent"></span>
+                </span>
                 Available for new projects
               </div>
               
-              <h1 className="font-heading font-bold text-5xl md:text-6xl lg:text-7xl text-gray-900 leading-[1.1] tracking-tight">
-                Design that <span className="relative whitespace-nowrap">
-                  <span className="relative z-10 text-cerons-dark">sells</span>
-                  <svg className="absolute bottom-1 left-0 w-full h-3 text-cerons-accent/20 -z-10" viewBox="0 0 100 10" preserveAspectRatio="none">
-                    <path d="M0 5 Q 50 10 100 5" stroke="currentColor" strokeWidth="8" fill="none" />
-                  </svg>
-                </span> <br/>
+              {/* Heading */}
+              <h1 className="font-heading font-bold text-6xl md:text-7xl lg:text-8xl text-gray-900 leading-[1.05] tracking-tight mb-8 max-w-3xl mx-auto">
+                Design that <span className="relative inline-block px-2">
+                  <span className="relative z-10 text-transparent bg-clip-text bg-gradient-to-r from-cerons-dark to-cerons-accent">sells</span>
+                  {/* Subtle highlight behind "sells" */}
+                  <div className="absolute inset-0 bg-cerons-accent/10 -skew-x-6 rounded-lg -z-10"></div>
+                </span> <br className="hidden md:block" />
                 and builds trust.
               </h1>
               
-              <p className="text-xl text-gray-600 leading-relaxed max-w-lg font-light">
+              {/* Subheading */}
+              <p className="text-xl md:text-2xl text-gray-500 leading-relaxed max-w-xl mx-auto font-light mb-12 text-balance">
                 We design clean, high-performance websites for businesses that want to look professional, rank higher, and convert visitors into customers.
               </p>
               
-              <div className="flex flex-col sm:flex-row gap-4 pt-4">
-                <a href={WHATSAPP_LINK} target="_blank" rel="noopener noreferrer">
-                  <Button icon variant="primary" className="w-full sm:w-auto text-lg px-8 py-4 shadow-xl shadow-cerons-accent/20 hover:shadow-cerons-accent/30 transition-all hover:-translate-y-1">Get a Website</Button>
+              {/* CTA Buttons - Enhanced */}
+              <div className="flex flex-col sm:flex-row gap-5 w-full sm:w-auto justify-center mb-16">
+                <a href={WHATSAPP_LINK} target="_blank" rel="noopener noreferrer" className="w-full sm:w-auto group">
+                  <Button icon variant="primary" className="w-full sm:w-auto text-lg px-10 py-5 rounded-full shadow-[0_10px_30px_-10px_rgba(34,197,94,0.4)] hover:shadow-[0_20px_40px_-10px_rgba(34,197,94,0.5)] border-0 ring-4 ring-cerons-accent/10">Get a Website</Button>
                 </a>
-                <Link to="/work">
-                  <Button variant="outline" className="w-full sm:w-auto text-lg px-8 py-4 bg-white border-gray-200 hover:border-cerons-dark hover:bg-gray-50">View Work</Button>
+                <Link to="/work" className="w-full sm:w-auto">
+                  <Button variant="outline" className="w-full sm:w-auto text-lg px-10 py-5 rounded-full bg-white/50 backdrop-blur-sm border-gray-200 text-gray-600 hover:text-cerons-dark hover:border-cerons-dark hover:bg-white transition-all">View Work</Button>
                 </Link>
               </div>
               
-              <div className="flex items-center gap-6 pt-6 border-t border-gray-100">
-                 <div className="flex -space-x-3">
+              {/* Social Proof - Glass Container */}
+              <div className="inline-flex flex-col sm:flex-row items-center gap-6 p-4 pr-8 rounded-full bg-white/60 backdrop-blur-md border border-white/60 shadow-lg shadow-gray-100/50 hover:bg-white/80 transition-colors duration-300">
+                 <div className="flex -space-x-4 pl-2">
                     {[1,2,3,4].map(i => (
-                        <div key={i} className="w-10 h-10 rounded-full bg-gray-100 border-2 border-white flex items-center justify-center overflow-hidden">
+                        <div key={i} className="w-10 h-10 rounded-full bg-gray-100 border-2 border-white flex items-center justify-center overflow-hidden shadow-sm ring-1 ring-black/5">
                            <img src={`https://picsum.photos/100/100?random=${i+10}`} alt="Client" className="w-full h-full object-cover" />
                         </div>
                     ))}
+                    <div className="w-10 h-10 rounded-full bg-gray-900 border-2 border-white flex items-center justify-center text-white text-[10px] font-bold ring-1 ring-black/5">
+                        50+
+                    </div>
                  </div>
-                 <div className="text-sm">
-                    <p className="font-bold text-gray-900">Trusted by 50+ Businesses</p>
-                    <div className="flex text-yellow-400 text-xs">
+                 <div className="flex flex-col items-center sm:items-start">
+                    <div className="flex text-yellow-400 text-xs mb-0.5 gap-0.5">
                         {'★★★★★'.split('').map((s,i) => <span key={i}>{s}</span>)}
                     </div>
+                    <p className="text-xs font-bold text-gray-900 uppercase tracking-wide">Trusted by Businesses</p>
                  </div>
               </div>
-            </div>
-          </Reveal>
-          
-          {/* Hero Visual - Refined */}
-          <Reveal delay={200} className="hidden lg:block relative h-full min-h-[600px] flex items-center justify-center">
-             <div className="relative w-full max-w-lg mx-auto perspective-1000">
-                {/* Main Floating Card */}
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full shadow-2xl rounded-2xl bg-white border border-gray-100 p-2 transform rotate-y-[-5deg] rotate-x-[5deg] hover:rotate-0 transition-transform duration-700 ease-out z-20">
-                    <BrowserFrame 
-                      iframeSrc="https://aoma.netlify.app/"
-                      alt="AOMA Website" 
-                      aspectRatio="aspect-[4/3]"
-                      className="shadow-inner"
-                    />
-                </div>
-                
-                {/* Secondary Card (Mobile) */}
-                <div className="absolute -bottom-12 -right-12 w-48 shadow-2xl rounded-3xl bg-gray-900 border-4 border-gray-800 p-1 transform translate-z-10 animate-bounce-subtle z-30">
-                    <div className="rounded-[1.2rem] overflow-hidden bg-white aspect-[9/19]">
-                        <img src="https://picsum.photos/400/800?random=99" alt="Mobile UI" className="w-full h-full object-cover opacity-80" />
-                    </div>
-                </div>
 
-                {/* Decorative Elements */}
-                <div className="absolute -top-12 -left-12 w-24 h-24 bg-gradient-to-br from-cerons-accent to-green-300 rounded-2xl rotate-12 blur-xl opacity-40 -z-10 animate-pulse"></div>
-             </div>
+            </div>
           </Reveal>
         </div>
       </section>
